@@ -1,9 +1,11 @@
 <template>
-  <Tutorial />
+  <div>
+    <s-notes />
+    <m-popup v-show="popupVisible" />
+  </div>
 </template>
 
-<script>
-export default {
-  name: 'IndexPage',
-}
+<script setup>
+const popupVisible = ref(false);
+
 </script>

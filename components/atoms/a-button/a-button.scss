@@ -1,0 +1,20 @@
+.a-button {
+  padding: 16px;
+  border-radius: 4px;
+  opacity: 0.8;
+  transition: all 0.3s;
+  cursor: pointer;
+  font-weight: 700;
+
+  &-gray {
+    background: var(--color-gray);
+  }
+
+  &-red {
+    background: var(--color-red);
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
