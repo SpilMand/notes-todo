@@ -1,19 +1,26 @@
 <template>
   <div class="editor">
     <a-title title="Редактор заметок" />
-    <input class="editor__input editor__input-large" v-model="curNoteTitle" placeholder="Введите название заметки">
-    <a-checkbox
-      v-for="(item, index) of curNote?.items"
-      :key="index"
-      :content="item"
-      @change="editItem"
-      @delete="deleteItem"
-    />
-    <input class="editor__input editor__input-medium" placeholder="Добавить пункт" v-model="newItem" @change="addItem(newItem)" >
+    <div class="editor__content">
+      <input class="editor__input editor__input-large" v-model="curNoteTitle" placeholder="Введите название заметки">
+      <a-checkbox
+        v-for="(item, index) of curNote?.items"
+        :key="index"
+        :content="item"
+        @change="editItem"
+        @delete="deleteItem"
+      />
+      <input
+        class="editor__input editor__input-add editor__input-medium"
+        placeholder="Добавить пункт"
+        v-model="newItem"
+        @change="addItem(newItem)"
+      >
+    </div>
     <div class="editor__actions">
       <div class="editor__save editor__action" v-html="saveIcon" @click="edit" />
-      <div class="editor__arrow-left editor__action" v-html="arrowIcon" @click="undoChange" />
-      <div class="editor__arrow-right editor__action" v-html="arrowIcon" @click="undoChange" />
+      <div class="editor__arrow-left editor__action" v-html="arrowIcon" @click="undo(-1)" />
+      <div class="editor__arrow-right editor__action" :class="nextData ? '' : 'editor__action-disabled'" v-html="arrowIcon" @click="undo(1)" />
       <div class="editor__delete editor__action" v-html="deleteIcon" @click="popupVisible = true" />
     </div>
     <m-popup v-show="popupVisible" @close="closePopup" />
@@ -31,6 +38,9 @@ const curNoteTitle = ref();
 const newItem = ref('');
 
 const popupVisible = ref(false);
+
+const previousData = ref();
+const nextData = ref();
 
 const addItem = (value) => {
   if (value) {
@@ -76,9 +86,23 @@ const deleteItem = (id) => {
   curNote.value.items = curNote.value.items.filter(element => element.id != id);
 }
 
-const undoChange = () => {
-
+const undo = (value) => {
+  if (value === -1) {
+    nextData.value = JSON.parse(JSON.stringify(curNote.value));
+    curNote.value = JSON.parse(JSON.stringify(previousData.value));
+  } else if (nextData.value) {
+    curNote.value = JSON.parse(JSON.stringify(nextData.value));
+    nextData.value = null;
+  }
 }
+
+const kostyl = computed(() => JSON.stringify(curNote.value?.items))
+
+watch(kostyl, () => {
+  if (JSON.stringify(curNote.value) != JSON.stringify(previousData.value)) {
+    nextData.value = null;
+  }
+})
 
 onMounted(() => {
   if (store.notes?.find(element => element.id == store.openedCard)) {
@@ -90,8 +114,7 @@ onMounted(() => {
       items: [],
     };
   }
-  console.log(curNote.value);
-  
+  previousData.value = JSON.parse(JSON.stringify(curNote.value));
 })
 
 onBeforeUnmount(() => {

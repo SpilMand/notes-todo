@@ -21,6 +21,10 @@
   &__list {
     margin-top: 8px;
     font-size: 24px;
+    max-height: 230px;
+    overflow-y: scroll;
+    /* хром, сафари */
+    &::-webkit-scrollbar { width: 0; }
   }
 
   &__item {
@@ -28,6 +32,7 @@
     gap: 8px;
     padding: 8px 0;
     border-bottom: 1px solid black;
+    overflow-wrap: anywhere;
   }
 
   &__actions {
