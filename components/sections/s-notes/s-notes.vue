@@ -9,22 +9,9 @@
 </template>
 
 <script setup>
-const cards = ref([
-  {
-    title: 'note 1',
-    items: [
-      'item 1',
-      'item 2',
-      'item 3'
-    ]
-  },
-  {
-    title: 'note 2',
-    items: [
-      'item 1'
-    ]
-  }
-])
+defineProps({
+  cards: { type: Object, default: () => ({}) },
+})
 
 const addNote = () => {
 

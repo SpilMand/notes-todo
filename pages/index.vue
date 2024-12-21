@@ -1,11 +1,18 @@
 <template>
   <div>
-    <s-notes />
+    <s-notes :cards="notes" />
     <m-popup v-show="popupVisible" />
   </div>
 </template>
 
 <script setup>
-const popupVisible = ref(false);
+import { useTodoStore } from '~/store/todoStore';
+const store = useTodoStore();
+
+const notes = ref(store.notes);
+
+const popupVisible = computed(() => {
+  return !!store.openedCard;
+});
 
 </script>
