@@ -5,10 +5,18 @@
         {{ content.title }}
       </h2>
       <ul class="m-card__list">
-        <li v-for="(item, index) of content.items" :key="index" class="m-card__item">{{ item.label }}</li>
+        <li
+          v-for="(item, index) of content.items"
+          :key="index"
+          class="m-card__item"
+          :class="item.checked ? 'm-card__item-checked' : ''"
+        >
+          {{ item.label }}
+          <img v-if="JSON.parse(item.checked)" src="/public/icons/check.svg" width="26">
+        </li>
       </ul>
       <div class="m-card__actions">
-        <div class="m-card__edit m-card__action" v-html="editIcon" />
+        <div class="m-card__edit m-card__action" v-html="editIcon" @click="editCard" />
         <div class="m-card__delete m-card__action" v-html="deleteIcon" @click="deleteCard" />
       </div>
     </div>
@@ -24,6 +32,11 @@ const props = defineProps({
 })
 
 const store = useTodoStore();
+
+const editCard = () => {
+  store.setOpenedCard(props.content.id);
+  navigateTo('/editor');
+}
 
 const deleteCard = () => {
   store.setOpenedCard(props.content.id);

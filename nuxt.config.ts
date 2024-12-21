@@ -1,4 +1,5 @@
 export default defineNuxtConfig({
+  ssr: false,
   css: ['@/assets/styles/main.scss'],
   components: {
     global: true,

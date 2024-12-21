@@ -1,0 +1,54 @@
+.a-checkbox {
+  display: flex;
+  gap: 8px;
+  position: relative;
+  &__box {
+    margin-right: 16px;
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 26px;
+      height: 26px;
+      border: 2px solid black;
+      border-radius: 4px;
+      background: white;
+    }
+
+    &::after {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      top: 0;
+      background: url('/public/icons/check.svg') no-repeat 100% / 100%;
+      transform: scale(0);
+      transition: all 0.3s;
+    }
+
+    &:checked {
+      &::after {
+        transform: scale(1.2);
+      }
+    }
+  }
+  &__label {
+    font-size: 24px;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+
+  &__cross {
+    cursor: pointer;
+    transition: all 0.3s;
+
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    &:hover {
+      transform: scale(1.3);
+    }
+  }
+}

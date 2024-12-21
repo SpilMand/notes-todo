@@ -1,0 +1,43 @@
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 100vh;
+
+  &__input {
+    border: 1px solid black;
+    width: fit-content;
+
+    &-medium {
+      font-size: 24px;
+    }
+
+    &-large {
+      font-size: 36px;
+    }
+  
+    &:not(:placeholder-shown) {
+      border: none;
+    }
+  }
+
+  &__actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__arrow-right {
+    transform: scaleX(-1);
+  }
+
+  &__action {
+    opacity: 0.5;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
