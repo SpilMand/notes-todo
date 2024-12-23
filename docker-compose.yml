@@ -1,0 +1,14 @@
+---
+name: test
+services:
+  frontend:
+    build:
+      dockerfile: ./Dockerfile
+    ports:
+      - "3082:3000"
+    container_name: test-frontend
+    labels:
+      - "filebeat_enable=true"
+    restart: unless-stopped
+
+...
